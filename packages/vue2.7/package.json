@@ -15,6 +15,10 @@
   "devDependencies": {
     "@vitejs/plugin-vue2": "^2.2.0",
     "@vitejs/plugin-vue2-jsx": "^1.1.0",
+    "@vue/babel-sugar-composition-api-inject-h": "^1.4.0",
+    "@vue/babel-sugar-composition-api-render-instance": "^1.4.0",
+    "@vue/babel-sugar-v-model": "^1.4.0",
+    "add": "^2.0.6",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vue-tsc": "^1.8.5"

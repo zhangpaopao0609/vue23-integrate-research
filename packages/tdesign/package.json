@@ -8,6 +8,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.7.2",
     "lodash": "^4.17.21"
   }
 }

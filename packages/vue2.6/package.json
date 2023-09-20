@@ -12,13 +12,19 @@
   "dependencies": {
     "@vue/composition-api": "^1.7.2",
     "tdesign": "workspace:^",
-    "vue": "2.6"
+    "vue": "~2.6.14"
   },
   "devDependencies": {
+    "@rollup/pluginutils": "^5.0.4",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
+    "@vue/babel-preset-jsx": "^1.4.0",
+    "@vue/babel-sugar-composition-api-inject-h": "^1.4.0",
+    "@vue/babel-sugar-composition-api-render-instance": "^1.4.0",
     "fs-extra": "^11.1.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-vue2": "^2.0.3",
+    "vue-template-compiler": "2.6.14",
     "vue-tsc": "^1.8.5"
   }
 }

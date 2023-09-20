@@ -1,15 +1,14 @@
-import { computed } from 'vue';
-import { useConfig } from '../config-provider/useConfig';
+import { computed, ref } from 'vue';
 
 export function usePrefixClass(componentName?: string) {
-  const { classPrefix } = useConfig('classPrefix');
+  const classPrefix = ref('paopao')
   return computed(() => {
     return componentName ? `${classPrefix.value}-${componentName}` : classPrefix.value;
   });
 }
 
 export function useCommonClassName() {
-  const { classPrefix } = useConfig('classPrefix');
+  const classPrefix = ref('paopao')
 
   return {
     SIZE: computed(() => ({

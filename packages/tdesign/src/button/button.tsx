@@ -1,6 +1,5 @@
 import { computed, defineComponent, h, ref } from 'vue';
 import props from './props';
-import useRipple from '../hooks/useRipple';
 import { usePrefixClass, useCommonClassName } from '../hooks/useConfig';
 import { useTNodeJSX, useContent } from '../hooks/tnode';
 import { useDisabled } from '../hooks/useDisabled';
@@ -14,8 +13,6 @@ export default defineComponent({
     const COMPONENT_NAME = usePrefixClass('button');
     const { STATUS, SIZE } = useCommonClassName();
     const btnRef = ref<HTMLElement>();
-
-    useRipple(btnRef);
 
     const isDisabled = useDisabled();
 
@@ -40,7 +37,7 @@ export default defineComponent({
       },
     ]);
 
-    return () => {
+    const renderer = () => {
       let buttonContent = renderContent('default', 'content');
       const icon = props.loading ? '加载中。。。' : renderTNodeJSX('icon');
       const iconOnly = icon && !buttonContent;
@@ -80,5 +77,14 @@ export default defineComponent({
         [buttonContent],
       );
     };
+
+    return {
+      renderer
+    }
   },
+  render(this) {
+    console.log(this);
+    return  this.renderer()
+    return <div>1</div>
+  }
 });

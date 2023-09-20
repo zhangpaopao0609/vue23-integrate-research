@@ -1,5 +1,7 @@
 import Vue from 'vue'
+
 // @ts-ignore
+// import App from "./App";
 import App from "tdesign";
 
 // Vue.config.productionTip = false

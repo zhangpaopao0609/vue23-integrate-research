@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from '@vue/composition-api';
 
 interface List {
   key: number,

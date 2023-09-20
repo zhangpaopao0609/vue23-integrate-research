@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { defineComponent, ref } from 'vue';
 
 interface List {
