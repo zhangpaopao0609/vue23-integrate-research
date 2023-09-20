@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueCompositionAPI from '@vue/composition-api'
 
 // @ts-ignore
-import App from "./App";
+// import App from "./App";
+import App from "tdesign";
 
 Vue.use(VueCompositionAPI)
 
