@@ -12,4 +12,7 @@ export default defineConfig({
       external: ['vue'], // 将 'vue' 从打包结果中排除
     },
   },
+  server: {
+    port: 6091
+  }
 })
