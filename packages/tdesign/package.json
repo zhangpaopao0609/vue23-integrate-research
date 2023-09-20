@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "type": "module",
   "main": "./main.js",
-  "module": "./main.js"
+  "module": "./main.js",
+  "devDependencies": {
+    "vue": "^3.3.4"
+  }
 }

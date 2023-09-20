@@ -1,3 +1,3 @@
-import App from "./src/App.vue";
+import App from "./src/App";
 
 export default App
