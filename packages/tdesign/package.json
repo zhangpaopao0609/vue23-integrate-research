@@ -2,6 +2,6 @@
   "name": "tdesign",
   "version": "0.0.1",
   "type": "module",
-  "main": "./main.ts",
-  "module": "./main.ts"
+  "main": "./main.js",
+  "module": "./main.js"
 }
