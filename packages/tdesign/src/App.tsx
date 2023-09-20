@@ -1,17 +1,58 @@
 import { defineComponent, ref } from 'vue';
 
+interface List {
+  key: number,
+  status: 0 | 1,
+  content: string,
+}
+
 const App = defineComponent({
   setup() {
-    const count = ref(0);
+    const userInput = ref('');
+    const lists = ref<List[]>([]);
 
-    const inc = () => {
-      count.value++;
+    const inputKeydown = (e: KeyboardEvent) => {
+      if(e.keyCode === 13) {
+        lists.value.push({
+          key: Date.now(),
+          status: 0,
+          content: userInput.value
+        });
+        userInput.value = '';
+      }
     };
 
-    return () => (
-      <div onClick={inc}>{count.value}</div>
-    );
+    // return () => (
+    //   <div>
+    //     <input type="text" v-model={userInput.value} onKeydown={inputKeydown}/>
+    //     {
+    //       lists.value.map((list) => (
+    //         <div key={list.key}>
+    //           { list.content }
+    //         </div>
+    //       ))
+    //     }
+    //   </div>
+    // );
+    return {
+      userInput,
+      lists,
+      inputKeydown,
+    }
   },
+
+  render() {
+    return (<div>
+        <input type="text" v-model={this.userInput} onKeydown={this.inputKeydown}/>
+        {
+          this.lists.map((list) => (
+            <div key={list.key}>
+              { list.content }
+            </div>
+          ))
+        }
+      </div>)
+  }
 });
 
 export default App
