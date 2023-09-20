@@ -21,26 +21,12 @@ const App = defineComponent({
         userInput.value = '';
       }
     };
-
-    // return () => (
-    //   <div>
-    //     <input type="text" v-model={userInput.value} onKeydown={inputKeydown}/>
-    //     {
-    //       lists.value.map((list) => (
-    //         <div key={list.key}>
-    //           { list.content }
-    //         </div>
-    //       ))
-    //     }
-    //   </div>
-    // );
     return {
       userInput,
       lists,
       inputKeydown,
     }
   },
-
   render() {
     return (<div>
         <input type="text" v-model={this.userInput} onKeydown={this.inputKeydown}/>
