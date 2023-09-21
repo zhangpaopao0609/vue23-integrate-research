@@ -25,6 +25,8 @@ const App = defineComponent({
         autocomplete: props.autocomplete
       }),
     );
+    console.log(props);
+    
     const { value, modelValue } = toRefs(props);
     const [innerValue, setInnerValue] = useVModel(value, modelValue, props.defaultValue, props.onChange as any);
     const handleInput = (e:InputEvent) => {

@@ -6,6 +6,7 @@ import vue2Jsx from '@vitejs/plugin-vue2-jsx';
 export default defineConfig({
   plugins: [vue2(), vue2Jsx({
       vModel: true,
+      compositionAPI: true,
   })],
   build: {
     minify: false,
