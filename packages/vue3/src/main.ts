@@ -1,6 +1,5 @@
 import { createApp } from "vue";
-// @ts-ignore
-import App from "tdesign";
+import App from "./App";
 
 const app = createApp(App).mount("#app")
 

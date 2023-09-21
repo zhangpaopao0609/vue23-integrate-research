@@ -1,18 +1,9 @@
-import { computed, defineComponent, h, ref } from 'vue';
-import { Button } from "tdesign/node_modules/main";
+import { defineComponent } from 'vue';
+import { Todomvc } from "tdesign";
 
-export default defineComponent({
+const App = defineComponent({
   setup() {
-    const count = ref(1);
-
-    const handleClick = () => {
-      count.value++
-    }
-
-    return () => (
-      <div>
-        <Button>跑跑</Button>
-      </div>
-    )
+    return () => <Todomvc />
   }
-});
+})
+export default App

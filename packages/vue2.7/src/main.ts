@@ -1,11 +1,5 @@
 import Vue from 'vue'
-
-// @ts-ignore
-// import App from "./App";
-import App from "tdesign";
-
-// Vue.config.productionTip = false
-// Vue.config.devtools = true
+import App from "./App";
 
 new Vue({
   el: '#app',
