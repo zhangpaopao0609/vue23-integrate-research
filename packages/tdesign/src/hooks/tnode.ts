@@ -44,6 +44,7 @@ function isEmptyNode(node: any) {
  */
 export const useTNodeJSX = () => {
   const instance = getCurrentInstance();
+  console.log(instance);
   return function (name: string, options?: OptionsType) {
     // assemble params && defaultNode
     const params = getParams(options);
