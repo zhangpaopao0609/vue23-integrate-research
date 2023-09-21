@@ -39,5 +39,3 @@ export function useCommonClassName() {
     })),
   };
 }
-
-export { useConfig };
