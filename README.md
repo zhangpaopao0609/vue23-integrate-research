@@ -16,9 +16,9 @@
 
 来看 vue 的整个过程。
 
-![image-20230925172041578](/Users/zhangbo/Desktop/my/vue23-integrate-research/images/1.png)
+![image-20230925172041578](./images/1.png)
 
-![image-20230925172226257](/Users/zhangbo/Desktop/my/vue23-integrate-research/images/2.png)
+![image-20230925172226257](./images/2.png)
 
 
 
