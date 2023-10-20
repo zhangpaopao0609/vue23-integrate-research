@@ -1,18 +1,170 @@
-# Vue 3 + TypeScript + Vite
+jsx-vue2 
+https://github.com/vuejs/jsx-vue2
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+jsx 解析器：
 
-## Recommended IDE Setup
+https://github.com/vitejs/vite-plugin-vue2-jsx/blob/main/package.json
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+@vue/babel-preset-jsx
 
-## Type Support For `.vue` Imports in TS
+https://github.com/vuejs/jsx-vue2/tree/master#readme
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+问题 1：
+props 如何解决
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+修改 _mergeJSXProps 方法让使得 {...props} 支持
+
+```js
+() => h("div", [h(Todomvc, _mergeJSXProps([{}, baseProps]))])
+```
+
+修改 babel-helper-vue-jsx-merge-props 插件
+
+```js
+const normalMerge = ['attrs', 'props', 'domProps']
+const toArrayMerge = ['class', 'style', 'directives']
+const functionalMerge = ['on', 'nativeOn']
+
+const mergeJsxProps = objects =>
+  objects.reduce((a, b) => {
+    for (const key in b) {
+      if (a[key]) {
+        if (normalMerge.indexOf(key) !== -1) {
+          a[key] = { ...a[key], ...b[key] }
+        } else if (toArrayMerge.indexOf(key) !== -1) {
+          const arrA = a[key] instanceof Array ? a[key] : [a[key]]
+          const arrB = b[key] instanceof Array ? b[key] : [b[key]]
+          a[key] = [...arrA, ...arrB]
+        } else if (functionalMerge.indexOf(key) !== -1) {
+          for (const event in b[key]) {
+            if (a[key][event]) {
+              const arrA = a[key][event] instanceof Array ? a[key][event] : [a[key][event]]
+              const arrB = b[key][event] instanceof Array ? b[key][event] : [b[key][event]]
+              a[key][event] = [...arrA, ...arrB]
+            } else {
+              a[key][event] = b[key][event]
+            }
+          }
+        } else if (key === 'hook') {
+          for (let hook in b[key]) {
+            if (a[key][hook]) {
+              a[key][hook] = mergeFn(a[key][hook], b[key][hook])
+            } else {
+              a[key][hook] = b[key][hook]
+            }
+          }
+        } else {
+          a.props = a.props ? {
+            ...a.props,
+            [key]: b[key],
+          } : { [key]: b[key] }
+        }
+      } else {
+        if ([...normalMerge, ...toArrayMerge, ...functionalMerge].indexOf(key) !== -1) {
+          a[key] = b[key]
+        } else {
+          a.props = a.props ? {
+            ...a.props,
+            [key]: b[key],
+          } : { [key]: b[key] }
+        }
+      }
+    }
+    return a
+  }, {})
+
+const mergeFn = (fn1, fn2) =>
+  function () {
+    fn1 && fn1.apply(this, arguments)
+    fn2 && fn2.apply(this, arguments)
+  }
+
+export default mergeJsxProps
+```
+
+问题2：v-slots
+
+同样的解决方式
+
+```js
+() => h("div", [h(Todomvc, _mergeJSXProps([{}, baseProps, {
+  "directives": [{
+    name: "slots",
+    value: slots
+  }]
+}]))])
+```
+
+vue2 的 h 函数接收什么格式，`mergeJsxProps` 就格式化成什么格式
+
+```js
+const normalMerge = ['attrs', 'props', 'domProps']
+const toArrayMerge = ['class', 'style', 'directives']
+const functionalMerge = ['on', 'nativeOn']
+
+
+const mergeJsxProps = objects =>
+  objects.reduce((a, b) => {
+    for (const key in b) {
+      if (key === 'directives') {
+        const arr = b[key];
+        arr.forEach((v) => {
+          if (v.name === 'slots') {
+            a.scopedSlots = a.scopedSlots ? { ...a.scopedSlots, ...v.value } : v.value;
+          }
+        })
+      }
+      if (a[key]) {
+        if (normalMerge.indexOf(key) !== -1) {
+          a[key] = { ...a[key], ...b[key] }
+        } else if (toArrayMerge.indexOf(key) !== -1) {
+          const arrA = a[key] instanceof Array ? a[key] : [a[key]]
+          const arrB = b[key] instanceof Array ? b[key] : [b[key]]
+          a[key] = [...arrA, ...arrB]
+        } else if (functionalMerge.indexOf(key) !== -1) {
+          for (const event in b[key]) {
+            if (a[key][event]) {
+              const arrA = a[key][event] instanceof Array ? a[key][event] : [a[key][event]]
+              const arrB = b[key][event] instanceof Array ? b[key][event] : [b[key][event]]
+              a[key][event] = [...arrA, ...arrB]
+            } else {
+              a[key][event] = b[key][event]
+            }
+          }
+        } else if (key === 'hook') {
+          for (let hook in b[key]) {
+            if (a[key][hook]) {
+              a[key][hook] = mergeFn(a[key][hook], b[key][hook])
+            } else {
+              a[key][hook] = b[key][hook]
+            }
+          }
+        } else {
+          a.props = a.props ? {
+            ...a.props,
+            [key]: b[key],
+          } : { [key]: b[key] }
+        }
+      } else {
+        if ([...normalMerge, ...toArrayMerge, ...functionalMerge].indexOf(key) !== -1) {
+          a[key] = b[key]
+        } else {
+          a.props = a.props ? {
+            ...a.props,
+            [key]: b[key],
+          } : { [key]: b[key] }
+        }
+      }
+    }
+    return a
+  }, {})
+
+const mergeFn = (fn1, fn2) =>
+  function () {
+    fn1 && fn1.apply(this, arguments)
+    fn2 && fn2.apply(this, arguments)
+  }
+
+export default mergeJsxProps
+```

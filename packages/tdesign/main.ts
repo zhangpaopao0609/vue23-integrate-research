@@ -1,9 +1,7 @@
-import Todomvc from "./src/components/todomvc/todomvc";
-import TdInput from "./src/components/input/input";
-import TdButton from "./src/components/button/index";
+import Todomvc from "./components/todomvc/todomvc";
+import UserResume from "./components/user-resume";
 
 export {
   Todomvc,
-  TdInput,
-  TdButton
+  UserResume
 };

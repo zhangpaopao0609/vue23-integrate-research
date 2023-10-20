@@ -1,32 +1,34 @@
-import { defineComponent, ref, watch } from 'vue';
-import { Todomvc, TdButton } from "tdesign";
+import { defineComponent, reactive } from 'vue';
+import { UserResume } from "tdesign";
 
 const App = defineComponent({
   name: 'App',
   setup() {
-    const userInput = ref('')
-
-    watch(userInput, () => {
-      console.log(userInput.value);
+    const userInfo = reactive({
+      name: "Vue3",
+      age: 2,
+      gender: 1,
+      educationList: [
+        { time: '1998-1997', school: '国防大学' },
+        { time: '1999-2033', school: '农夫大学' },
+      ],
     })
 
-    // return () => (
-    //   <div>
-    //     <h1>Todomvc</h1>
-    //     <Todomvc />
-    //     <h1>TdButton</h1>
-    //     <div>
-    //       <TdButton theme="primary">填充按钮</TdButton>
-    //       <TdButton tag="div">div</TdButton>
-    //       <TdButton theme="primary">
-    //         {/* {{
-    //           icon: () => <div>我是一个 icon </div>
-    //         }} */}
-    //       </TdButton>
-    //     </div>
-    //   </div>
-    // )
-    return () => <TdButton theme="primary">填充按钮</TdButton>
+    setTimeout(() => {
+      userInfo.age += 1;
+    }, 2000);
+
+    const slots = { paopao: () => <span>我是 vue2.7 的具名插槽!</span> }
+
+    const handlePaopao = () => {
+      userInfo.age += 1;
+    }
+
+    return () => (
+      <div>
+        <UserResume {...userInfo} v-slots={slots} onPaopao={handlePaopao}/>
+      </div>
+    )
   }
 })
 export default App
