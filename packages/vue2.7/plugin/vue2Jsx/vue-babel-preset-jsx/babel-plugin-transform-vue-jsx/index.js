@@ -165,6 +165,7 @@ const parseAttributeJSXAttribute = (t, path, attributes, tagName, elementType) =
     ;[name, argument] = name.split(':')
 
   prefix = prefixes.find(el => name.startsWith(el)) || 'attrs'
+  let cloneName = name;
   name = name.replace(new RegExp(`^${prefix}\-?`), '')
   name = name[0].toLowerCase() + name.substr(1)
 
@@ -185,7 +186,10 @@ const parseAttributeJSXAttribute = (t, path, attributes, tagName, elementType) =
       throw new Error(`getAttributes (attribute value): ${valuePath.type} is not supported`)
     }
   }
-
+  // !todo zhangpaopao: 将 on 增加到 props 中
+  if(prefix === 'on') {
+    addAttribute(t, attributes, 'props', t.objectProperty(t.stringLiteral(cloneName), value))
+  }
   value._argument = argument
   value._modifiers = modifiers
 
@@ -193,6 +197,7 @@ const parseAttributeJSXAttribute = (t, path, attributes, tagName, elementType) =
     attributes[name] = value
   } else {
     if (isDirective(name)) {
+      // !todo zhangpaopao: 将 v-slots 编译成 scopedSlots: {}
       if(name.slice(2) === 'slots') {
         attributes.scopedSlots = value;
         return;
@@ -210,6 +215,8 @@ const parseAttributeJSXAttribute = (t, path, attributes, tagName, elementType) =
     }
     addAttribute(t, attributes, prefix, t.objectProperty(t.stringLiteral(name), value))
   }
+
+  
 }
 
 /**
@@ -278,7 +285,7 @@ const getAttributes = (t, paths, tag, openingElementPath) => {
     return t.arrayExpression(
       attributesArray.map(el => {
         if (el.type === 'vueSpread') {
-          // 将所有 {...xxx} 都编译成 props={xxx}
+          // !todo zhangpaopao: 将所有 {...xxx} 都编译成 props={xxx}
           if(t.isIdentifier(el.argument)) {
             return t.objectExpression([t.objectProperty(t.stringLiteral('props'), el.argument)]);
           }  else {
