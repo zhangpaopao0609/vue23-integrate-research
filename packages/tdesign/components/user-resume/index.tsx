@@ -27,9 +27,9 @@ const TodoList = defineComponent({
 
     return () => (
       <div class="resume">
-        <BasicInfo {...basicInfo.value} />
+        <BasicInfo props={basicInfo.value} />
         <EducationExperience educationList={props.educationList} />
-        <OtherInfo scopedSlots={{paopao: slots.paopao}} onPaopao={props.onPaopao}/>
+        <OtherInfo v-slots={{paopao: slots.paopao}} onPaopao={props.onPaopao}/>
       </div>
     )
   },
