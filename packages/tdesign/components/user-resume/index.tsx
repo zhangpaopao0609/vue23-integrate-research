@@ -5,8 +5,8 @@ import OtherInfo from "./other-info";
 
 import { EducationList } from "./type";
 
-const TodoList = defineComponent({
-  name: 'TodoList',
+const UserResume = defineComponent({
+  name: 'UserResume',
   props: {
     // 基本信息
     name: String,
@@ -35,4 +35,4 @@ const TodoList = defineComponent({
   },
 });
 
-export default TodoList
+export default UserResume
