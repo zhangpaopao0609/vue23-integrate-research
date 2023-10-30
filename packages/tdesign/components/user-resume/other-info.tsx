@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent } from 'common';
 
 const OtherInfo = defineComponent({
   name: 'OtherInfo',

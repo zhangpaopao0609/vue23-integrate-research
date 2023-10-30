@@ -1,5 +1,4 @@
 import * as Vue from "vue";
-import useVModel from "./hooks/useVModel";
 
 function getCurrentInstance() {
   const innerInstance = Vue.getCurrentInstance()?.proxy;
@@ -11,7 +10,8 @@ function getCurrentInstance() {
   return instance;
 }
 
+export * from 'vue'
+
 export {
   getCurrentInstance,
-  useVModel
 }

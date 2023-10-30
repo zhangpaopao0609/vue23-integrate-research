@@ -1,5 +1,4 @@
-import { defineComponent, computed, PropType, ref, watch, toRefs } from 'vue';
-import { useVModel } from "common";
+import { defineComponent, computed, PropType, ref, watch, toRefs, useVModel } from 'common';
 
 import BasicInfo from "./basic-info";
 import EducationExperience from "./education-experience";
@@ -21,10 +20,11 @@ const UserResume = defineComponent({
     work: String,
     onPaopao: Function,
     onInput: Function,
+
     // v-model
-    value: String,
-    modelValue: String,
-    
+    value: String, // 3 v-model:aaa aaaa update:aaa // 2 v-model
+    // v-model:
+    modelValue: String, // 3 v-model 
   },
   setup(props, { slots, emit }) {
     const { value: valueProps, modelValue } = toRefs(props)
@@ -40,7 +40,7 @@ const UserResume = defineComponent({
       setValue(target.value)
     }
     
-    const [value, setValue] = useVModel(valueProps, modelValue, null ,props.onInput, 'value', 'input');
+    const [value, setValue] = useVModel(valueProps, modelValue, null, props.onInput, 'value', 'input');
     
     watch(() => props.value, () => {
       console.log(props.value);

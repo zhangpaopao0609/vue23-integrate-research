@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType } from 'common';
 import { EducationList } from "./type";
 
 const EducationExperience = defineComponent({

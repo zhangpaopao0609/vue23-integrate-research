@@ -1,4 +1,4 @@
-import { Ref, ref, getCurrentInstance } from 'vue';
+import { Ref, ref, getCurrentInstance } from '../index';
 import kebabCase from 'lodash/kebabCase';
 
 export type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void;
@@ -24,15 +24,14 @@ export function useVModel<T, P extends any[]>(
   // 除了 value + onChange，还支持其他同含义字段和事件
   alias: UseVModelParams<T>[] = [],
 ) {
-  const instance = getCurrentInstance()?.proxy || {};
+  const instance = getCurrentInstance() || {};
   const { _events, $vnode } = instance;
   const internalValue = ref<T>();
   internalValue.value = defaultValue;
-
   const { propsData } = $vnode?.componentOptions || {}
   const isControlled = Object.prototype.hasOwnProperty.call(propsData, propName)
     || Object.prototype.hasOwnProperty.call(propsData, kebabCase(propName));
-  console.log(propsData);
+
   // 受控模式
   if (isControlled) {
     return [
