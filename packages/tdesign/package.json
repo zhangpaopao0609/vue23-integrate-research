@@ -10,6 +10,7 @@
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0"
   },
   "dependencies": {
+    "common": "workspace:^",
     "lodash": "^4.17.21"
   }
 }

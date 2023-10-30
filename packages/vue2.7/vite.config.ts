@@ -2,13 +2,14 @@ import { defineConfig } from 'vite'
 import vue2 from '@vitejs/plugin-vue2';
 // import vue2Jsx from '@vitejs/plugin-vue2-jsx';
 import vue2Jsx from './plugin/vue2Jsx';
-// import { transformAfterPlugin, transformBeforePlugin } from "./plugin/transform";
+import { transformAdapter, transformAfterPlugin, transformBeforePlugin } from "./plugin/transform";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue2(), 
+    transformAdapter(),
     // transformBeforePlugin(),
+    vue2(), 
     vue2Jsx({
       vModel: true,
     }),

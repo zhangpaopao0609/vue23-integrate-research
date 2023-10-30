@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, watch, reactive, getCurrentInstance } from 'vue';
+import { defineComponent, ref, watch, reactive } from 'vue';
 import { UserResume } from "tdesign";
 
 export default defineComponent({
@@ -20,8 +20,20 @@ export default defineComponent({
       userInfo.age += 1;
     }, 2000);
 
+    const handlePaopao = () => {
+      userInfo.age += 1;
+    }
+
+    const position = ref('');
+    
+    watch(position, () => {
+      console.log(position.value);
+    })
+
     return {
       userInfo,
+      handlePaopao,
+      position,
     }
   }
 })
@@ -29,7 +41,11 @@ export default defineComponent({
 
 <template>
   <div>
-    <UserResume v-bind="userInfo">
+    <UserResume
+      v-model="position"
+      v-bind="userInfo" 
+      :onPaopao="handlePaopao"
+    >
       <template #paopao>
         <span>我是 vue2.7 的具名插槽</span>
       </template>
