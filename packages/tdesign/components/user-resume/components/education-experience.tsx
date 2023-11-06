@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from 'common';
-import { EducationList } from "./type";
+import { EducationList } from "../type";
 
 const EducationExperience = defineComponent({
   name: 'EducationExperience',

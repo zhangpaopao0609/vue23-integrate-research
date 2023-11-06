@@ -1,31 +1,15 @@
-import { defineComponent, computed, PropType, ref, watch, toRefs, useVModel } from 'common';
+import { defineComponent, computed, PropType, ref, watch, toRefs, useVModel, getCurrentInstance } from 'common';
 
-import BasicInfo from "./basic-info";
-import EducationExperience from "./education-experience";
-import OtherInfo from "./other-info";
+import props from "./props.ts";
+import BasicInfo from "./components/basic-info";
+import EducationExperience from "./components/education-experience";
+import OtherInfo from "./components/other-info";
 
-import { EducationList } from "./type";
-
-import "./index.less";
+import "./styles/index.less";
 
 const UserResume = defineComponent({
   name: 'UserResume',
-  props: {
-    // 基本信息
-    name: String,
-    age: Number,
-    gender: Number,
-    // 教育经历
-    educationList: Array as PropType<EducationList[]>,
-    work: String,
-    onPaopao: Function,
-    onInput: Function,
-
-    // v-model
-    value: String, // 3 v-model:aaa aaaa update:aaa // 2 v-model
-    // v-model:
-    modelValue: String, // 3 v-model 
-  },
+  props,
   setup(props, { slots, emit }) {
     const { value: valueProps, modelValue } = toRefs(props)
 
@@ -34,17 +18,13 @@ const UserResume = defineComponent({
       age: props.age,
       gender: props.gender,
     }))
+    
+    const [value, setValue] = useVModel(valueProps, modelValue, null, props.onInput, 'value', 'input');
 
     const handleInput = (e: InputEvent) => {
       const target = e.target;
       setValue(target.value)
     }
-    
-    const [value, setValue] = useVModel(valueProps, modelValue, null, props.onInput, 'value', 'input');
-    
-    watch(() => props.value, () => {
-      console.log(props.value);
-    })
 
     return () => (
       <div class="resume">
@@ -65,4 +45,4 @@ const UserResume = defineComponent({
   },
 });
 
-export default UserResume
+export default UserResume;

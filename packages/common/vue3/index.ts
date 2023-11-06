@@ -1,7 +1,6 @@
 import { getCurrentInstance } from "vue";
-import useVModel from "./hooks/useVModel";
 
+export * from 'vue'
 export {
   getCurrentInstance,
-  useVModel,
 }
