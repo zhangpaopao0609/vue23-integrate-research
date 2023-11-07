@@ -26,6 +26,8 @@ const UserResume = defineComponent({
       setValue(target.value)
     }
 
+    console.log(getCurrentInstance());
+    
     return () => (
       <div class="resume">
         <h2>求职意向</h2>
